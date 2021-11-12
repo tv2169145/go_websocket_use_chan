@@ -10,7 +10,7 @@ import (
 var (
 	ChatRoom *Room
 	ug       = websocket.Upgrader{
-		// 允许跨域
+		// 允許跨域
 		CheckOrigin: func(r *http.Request) bool {
 			return true
 		},
@@ -34,7 +34,7 @@ func NewRoom() {
 	}
 }
 
-// 处理所有websocket请求
+// 處理所有websocket請求
 func ChatRoomHandle(w http.ResponseWriter, r *http.Request) {
 	conn, err := ug.Upgrade(w, r, nil)
 	if err != nil {
@@ -42,10 +42,10 @@ func ChatRoomHandle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// 创建客户端
+	// 建立client
 	c := &Client{
 		conn: conn,
-		send: make(chan Entity.Message, 128),
+		send: make(chan Entity.Message, 1000),
 	}
 
 	go c.ReadMessage()
@@ -53,16 +53,16 @@ func ChatRoomHandle(w http.ResponseWriter, r *http.Request) {
 	ChatRoom.register <- c
 }
 
-// 处理所有管道任务
+// 處理所有管道任务
 func (room *Room) ProcessTask() {
-	log.Println("启动处理任务")
+	log.Println("do process")
 	for {
 		select {
 		case c := <-room.register:
-			log.Println("当前有客户端进行注册")
+			log.Println("on connection")
 			room.clientsPool[c] = true
 		case c := <-room.unregister:
-			log.Println("当前有客户端离开")
+			log.Println("disconnection")
 			if room.clientsPool[c] {
 				close(c.send)
 				delete(room.clientsPool, c)

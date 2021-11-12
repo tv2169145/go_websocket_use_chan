@@ -27,7 +27,7 @@ func (c *Client) ReadMessage() {
 		// 限制用户发送消息频率，每1秒只能发送一条消息
 		curMessageTime := time.Now().Unix()
 		if curMessageTime-preMessageTime < 0 {
-			log.Println("1秒内无法再次发送")
+			log.Println("1秒内不可重發")
 			continue
 		}
 		preMessageTime = curMessageTime
@@ -35,7 +35,7 @@ func (c *Client) ReadMessage() {
 	}
 }
 
-// 发送消息
+// 發送消息
 func (c *Client) SendMessage() {
 	for {
 		m := <-c.send

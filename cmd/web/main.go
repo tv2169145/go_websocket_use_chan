@@ -13,5 +13,8 @@ func main() {
 	go roomHandler.ChatRoom.ProcessTask()
 
 	log.Println("start server on port 8081...")
-	_ = http.ListenAndServe(":8081", mux)
+	if err := http.ListenAndServe(":8081", mux); err != nil {
+		log.Println(err)
+		return
+	}
 }
