@@ -17,7 +17,7 @@
                 if (ws) {
                     return false;
                 }
-                ws = new WebSocket("ws://127.0.0.1:8081/ws");
+                ws = new WebSocket("ws://192.168.51.84:8081/ws");
                 ws.onopen = function (evt) {
                     print("進入");
                 }
