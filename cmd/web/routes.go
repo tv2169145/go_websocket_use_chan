@@ -11,6 +11,7 @@ func routes() http.Handler {
 	mux := pat.New()
 	roomHandler.NewRoom()
 	mux.Get("/", http.HandlerFunc(homeHandler.Home))
+	mux.Get("/broadcast", http.HandlerFunc(roomHandler.Broadcast))
 	mux.Get("/ws", http.HandlerFunc(roomHandler.ChatRoomHandle))
 
 	fileServer := http.FileServer(http.Dir("./static/"))

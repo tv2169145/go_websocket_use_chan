@@ -24,7 +24,7 @@ func (c *Client) ReadMessage() {
 			return
 		}
 
-		// 限制用户发送消息频率，每1秒只能发送一条消息
+		// 限制用户發送頻率，每1秒只能一次
 		curMessageTime := time.Now().Unix()
 		if curMessageTime-preMessageTime < 0 {
 			log.Println("1秒内不可重發")

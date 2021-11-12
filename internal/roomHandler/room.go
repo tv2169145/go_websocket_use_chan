@@ -34,6 +34,11 @@ func NewRoom() {
 	}
 }
 
+func Broadcast(w http.ResponseWriter, r *http.Request) {
+	ChatRoom.send <- Entity.Message{Token:"Reid", Content: "Hello"}
+	w.Write([]byte("ok"))
+}
+
 // 處理所有websocket請求
 func ChatRoomHandle(w http.ResponseWriter, r *http.Request) {
 	conn, err := ug.Upgrade(w, r, nil)
@@ -45,7 +50,7 @@ func ChatRoomHandle(w http.ResponseWriter, r *http.Request) {
 	// 建立client
 	c := &Client{
 		conn: conn,
-		send: make(chan Entity.Message, 1000),
+		send: make(chan Entity.Message, 50000),
 	}
 
 	go c.ReadMessage()
